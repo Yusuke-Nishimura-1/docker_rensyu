@@ -2,11 +2,11 @@ FROM php:8.2-apache
 
 COPY . /var/www/html
 
-RUN apt-get update -y && apt install -y \
+RUN apt-get update -y && apt-get install -y \
     curl \
     git \
-    unzip \
     libonig-dev \
+    unzip \
     #ref https://qiita.com/vitway/items/660f9121a9c6afbf1047
     && docker-php-ext-install mbstring \
     && rm -rf /var/lib/apt/lists/*
