@@ -9,6 +9,7 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     unzip \
     #ref https://qiita.com/vitway/items/660f9121a9c6afbf1047
     && docker-php-ext-install mbstring \
+    # ソフト格納先の人間確認用インデックスを削除
     && rm -rf /var/lib/apt/lists/*
 
 # ref https://getcomposer.org/download/
