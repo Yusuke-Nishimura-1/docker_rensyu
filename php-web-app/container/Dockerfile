@@ -24,4 +24,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer \
     && composer install
 
-# php入力モードの挙動確認 CMD ["php", "-a"]
+#ENTRYPOINT ["php"]
+#CMD ["-a"]
+
+VOLUME ["/var/www/html/storage"]
