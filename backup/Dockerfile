@@ -1,4 +1,9 @@
-FROM php:8.2-apache AS build
+FROM php:8.2-apache AS builder
+
+COPY ./src/. /var/www/html
+COPY ./composer.json /var/www/html
+ADD ./lib/test_dir_file.tar.gz /data
+WORKDIR /var/www/html
 
 # curlのみ試しで特定バージョン指定、他は最新をインストール
 # curlのバージョンはapt show curlで確認した。とりあえず、何か入れたいときはapt show [パッケージ名]で確認した
@@ -14,7 +19,6 @@ RUN apt-get update -y && apt-get install -y --no-install-recommends \
     # ソフト格納先のインストール使用時のみのインデックスを削除
     && rm -rf /var/lib/apt/lists/*
 
-COPY ./composer.json /var/www/html
 # ref https://getcomposer.org/download/
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php -r "if (hash_file('sha384', 'composer-setup.php') === 'c8b085408188070d5f52bcfe4ecfbee5f727afa458b2573b8eaaf77b3419b0bf2768dc67c86944da1544f06fa544fd47') { echo 'Installer verified'.PHP_EOL; } else { echo 'Installer corrupt'.PHP_EOL; unlink('composer-setup.php'); exit(1); }" \
@@ -23,16 +27,10 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer \
     && composer install
 
-COPY ./src/. /var/www/html
-ADD ./lib/test_dir_file.tar.gz /data
-WORKDIR /var/www/html
-
 FROM php:8.2-apache AS deploy
-LABEL version="1.0"
-LABEL description="PHP-Apache Laravel Environment"
-LABEL maintainer="sakamoto"
-COPY --from=build /var/www/html /var/www/html
-COPY --from=build /data /data
+COPY --from=builder /var/www/html /var/www/html
+COPY --from=builder /data /data
+
 EXPOSE 80/tcp
 
 # ENTRYPOINT ["php"]
@@ -45,6 +43,3 @@ ENV PATH="${PATH}:/usr/local/custom/bin"
 RUN ADMIN_USER="secretkey" \
     && echo $ADMIN_USER > ./user_name.txt \
     && unset ADMIN_USER
-
-# 最後のステージじゃないと反映されない。FROMで前のレイヤーから引き継がれていないため。
-ONBUILD CMD ["echo", "Standard PHP build trigger for ECS migration"]
