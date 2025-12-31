@@ -49,3 +49,6 @@ RUN ADMIN_USER="secretkey" \
 
 # 最後のステージじゃないと反映されない。FROMで前のレイヤーから引き継がれていないため。
 ONBUILD CMD ["echo", "Standard PHP build trigger for ECS migration"]
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl http://localhost/index.php || exit 1
