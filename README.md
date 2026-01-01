@@ -9,17 +9,18 @@
 ```
 docker_rensyu
 ├── README.md
-├── ecs-rensyu　ほぼ使ってない。
+├── ecs-rensyu
 │   ├── Dockerfile
 │   └── Gemfile
 └── php-web-app
-    ├── aws　ECSで構築するときが来たら最低限使えるように作成した。直接は使用しない。
+    ├── aws
     │   └── network.tf
     ├── composer.json
     ├── container
     │   ├── Dockerfile
     │   ├── Dockerfile.onbuild
     │   └── Dockerfile.sigle
+    ├── docker-compose.yml
     ├── lib
     │   └── test_dir_file.tar.gz
     └── src
@@ -46,9 +47,23 @@ $ docker run --rm --name php-sample-c php-sample whoami
 $ docker run -itd -p 8080:80 --rm --name php-sample-c -v $(pwd)/src:/var/www/html php-sample
 ```
 
+# docker compose起動&停止
+```
+# 起動
+$ docker compose up -d
+
+# 停止
+$ docker compose down --rmi all
+```
+
 # 実行結果確認
 ```
+# dockerコマンドで起動した場合
 $ docker exec -it php-sample bash
+
+# docker composeで起動した場合
+$ docker exec -it php-web-app-web-app-1 bash
+$ docker exec -it php-web-app-db-1 bash
 ```
 
 # php結果参照先

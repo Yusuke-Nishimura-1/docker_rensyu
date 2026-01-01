@@ -59,5 +59,9 @@ var_dump($num3);
 $num3 += 1;
 echo "<br/>";
 echo $num3;
+
+
 ?>
+<br>
+<a href="/help/help.php">help page</a>
 </h1>
