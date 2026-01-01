@@ -30,12 +30,18 @@ docker_rensyu
 
 # dockerビルド&起動コマンド
 ```
+# 作業場所
 $ cd ./php-web-app
+
+# ビルド
 $ docker build -t php-sample -f ./container/Dockerfile .
+
 # Dockerfile挙動確認
 $ docker run -itd -p 8080:80 --rm --name php-sample-c php-sample
+
 # Dockerfile USER確認
 $ docker run --rm --name php-sample-c php-sample whoami
+
 # PHP動作確認
 $ docker run -itd -p 8080:80 --rm --name php-sample-c -v $(pwd)/src:/var/www/html php-sample
 ```
