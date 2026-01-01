@@ -38,10 +38,9 @@ $ cd ./php-web-app
 $ docker build -t php-sample -f ./container/Dockerfile .
 
 # Dockerfile挙動確認
-$ docker run -itd -p 8080:80 --rm --name php-sample-c php-sample
-
-# Dockerfile USER確認
+$ docker run --rm --name php-sample-c php-sample composer -v
 $ docker run --rm --name php-sample-c php-sample whoami
+$ docker run -itd -p 8080:80 --rm --name php-sample-c php-sample
 
 # PHP動作確認
 $ docker run -itd -p 8080:80 --rm --name php-sample-c -v $(pwd)/src:/var/www/html php-sample

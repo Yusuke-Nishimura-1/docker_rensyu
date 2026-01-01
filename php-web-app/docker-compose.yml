@@ -1,6 +1,8 @@
 version: '5.0'
 services:
-  web-app:
+  web:
+  
+  app:
     build:
       context: .
       dockerfile: ./container/Dockerfile

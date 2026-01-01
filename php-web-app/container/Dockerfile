@@ -33,6 +33,7 @@ LABEL version="1.0"
 LABEL description="PHP-Apache Laravel Environment"
 LABEL maintainer="sakamoto"
 
+COPY --from=build /usr/local/bin/composer /usr/local/bin/composer
 COPY --from=build /var/www/html /var/www/html
 COPY --from=build /data /data
 
