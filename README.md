@@ -48,6 +48,9 @@ $ docker run -itd -p 8080:80 --rm --name php-sample-c -v $(pwd)/src:/var/www/htm
 
 # docker compose起動&停止
 ```
+# 作業場所
+$ cd ./php-web-app
+
 # 起動
 $ docker compose up -d
 
@@ -67,9 +70,6 @@ $ docker exec -it php-web-app-db-1 bash
 
 # php結果参照先
 ```
-# 作業場所
-$ cd ./php-web-app
-
 # 実行結果
 http://localhost:8080/
 
